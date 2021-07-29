@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!--<link rel="stylesheet" href="style.css">-->
+    <style>
+        body {
+            background-image: url(bg.jpg);
+            /*color: white;*/
+            margin-bottom: 50px;
+            margin-top: 40px;
+        }
+        
+        h1 {
+            font-size: 50px;
+        }
+        
+        input {
+            background: rgba(0, 0, 0, 0) !important;
+            color: white !important;
+        }
+        
+         ::placeholder {
+            color: gray !important;
+        }
+        
+        textarea {
+            background: rgba(0, 0, 0, 0) !important;
+            color: white !important;
+        }
+        
+        button {
+            background: blueviolet !important;
+            border: none !important;
+        }
+        
+        button:hover {
+            background: magenta !important;
+            transition: 2s !important;
+        }
+        
+        #cv-form {
+            /* display: none;*/
+            color: white;
+        }
+        
+        .myimg {
+            width: 200px;
+            height: 220px;
+        }
+        
+        .background {
+            background-color: rgb(4, 51, 151);
+            color: white;
+            word-wrap: break-word;
+        }
+        
+        .backgro {
+            background-color: rgb(4, 51, 151);
+            color: white;
+        }
+        
+        .backg {
+            color: black;
+        }
+        
+        #cv-template {
+            display: none;
+            width: 100% !important;
+            margin: 10px auto !important;
+            background-color: white;
+            border: 2px solid rgb(4, 51, 151);
+        }
+        
+        #print {
+            display: none;
+        }
+        
+        a {
+            text-decoration: none;
+            color: white;
+        }
+        
+        @media print {
+            body {
+                background: none;
+            }
+            #print {
+                visibility: hidden;
+            }
+            #cv-template {
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+            @page {
+                size: auto;
+                margin: 0.5mm;
+            }
+        }
+    </style>
+    <title>Resume</title>
+</head>
+
+<body id="body">
+    <div class="container" id="cv-form">
+        <h1 class="text-center my-2">Resume Builder</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <h3 class="form-group mt-5">Personal Information</h3>
+                <div class="form-group mt-3">
+                    <label for="nameField">Name</label>
+                    <input type="text" id="nameField" placeholder="Enter your name" class="form-control">
+                </div>
+                <div class="form-group mt-2">
+                    <label for="contactField">Phone Number</label>
+                    <input type="tel" id="contactField" placeholder="Enter your phone number" class="form-control" pattern="[0-9]{10}">
+                </div>
+                <div class="form-group mt-2">
+                    <label for="addressField">Address</label>
+                    <textarea type="text" id="addressField" placeholder="Enter your address" class="form-control" rows="4"></textarea>
+                </div>
+                <div class="form-group mt-2">
+                    <label for="emailField">Email Address</label>
+                    <input type="text" id="emailField" placeholder="Enter your email address" class="form-control">
+                </div>
+                <h5 class="form-group mt-5">Important Links</h5>
+                <div class="form-group mt-2">
+                    <label for="gitField">Github Link</label>
+                    <input type="text" id="gitField" placeholder="Enter your github link" class="form-control">
+                </div>
+                <div class="form-group mt-2">
+                    <label for="linkedField">LinkedIn Link</label>
+                    <input type="text" id="linkedField" placeholder="Enter your linkedin link" class="form-control">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <h3 class="form-group mt-5">Technical Information</h3>
+                <div class="form-group mt-2" id="ed">
+                    <label for="">Education</label>
+                    <textarea type="text" placeholder="Enter your education details" class="form-control educationField" rows="4"></textarea>
+                    <div class="container text-center mt-2" id="edButton">
+                        <button onclick="addEducation()" class="btn btn-primary btn-sm">Add</button>
+                    </div>
+                </div>
+                <div class="form-group mt-3" id="we">
+                    <label for="we">Work Experience</label>
+                    <textarea type="text" placeholder="Enter your work experience" class="form-control weField" rows="4"></textarea>
+                    <div class="container text-center mt-2" id="weButton">
+                        <button onclick="addWorkExperience()" class="btn btn-primary btn-sm">Add</button>
+                    </div>
+                </div>
+                <div class="form-group mt-2" id="sk">
+                    <label for="">Skills</label>
+                    <input type="text" placeholder="Enter your skills" class="form-control skillField">
+                    <div class="container text-center mt-2" id="skillButton">
+                        <button onclick="addSkills()" class="btn btn-primary btn-sm">Add</button>
+                    </div>
+                </div>
+                <div class="form-group mt-2" id="ac">
+                    <label for="">Achievements</label>
+                    <textarea type="text" placeholder="Enter your achievements" class="form-control achField" rows="4"></textarea>
+                    <div class="container text-center mt-2" id="achButton">
+                        <button onclick="addAchievements()" class="btn btn-primary btn-sm">Add</button>
+                    </div>
+                </div>
+                <div class="form-group mt-2" id="ce">
+                    <label for="">Certifications</label>
+                    <textarea type="text" placeholder="Enter your certifications" class="form-control certField" rows="4"></textarea>
+                    <div class="container text-center mt-2" id="certButton">
+                        <button onclick="addCertifications()" class="btn btn-primary btn-sm">Add</button>
+                    </div>
+                </div>
+                <div class="form-group mt-2" id="pr">
+                    <label for="">Projects</label>
+                    <textarea type="text" placeholder="Enter your project details" class="form-control projField" rows="4"></textarea>
+                    <div class="container text-center mt-2" id="projButton">
+                        <button onclick="addProjects()" class="btn btn-primary btn-sm">Add</button>
+                    </div>
+                </div>
+                <div class="form-group mt-2" id="la">
+                    <label for="">Languages</label>
+                    <input type="text" placeholder="Enter language" class="form-control langField">
+                    <div class="container text-center mt-2" id="langButton">
+                        <button onclick="addLanguages()" class="btn btn-primary btn-sm">Add</button>
+                    </div>
+                </div>
+                <div class="form-group mt-2" id="int">
+                    <label for="">Interests</label>
+                    <input type="text" placeholder="Enter your interests" class="form-control intField">
+                    <div class="container text-center mt-2" id="intButton">
+                        <button onclick="addInterests()" class="btn btn-primary btn-sm">Add</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="container text-center mt-3" id="printButton">
+            <button onclick="generate()" class="btn btn-primary btn-lg">Build Resume</button>
+        </div>
+    </div>
+
+    <div class="container-xxl" id="cv-template">
+        <div class="row" id="invoice">
+            <div class="col-md-4 text-center py-5 background">
+                <img src="profile.jpg" alt="" class="img-fluid myimg">
+                <div class="container">
+                    <p id="nameT">Joshua Pradeep</p>
+                    <p id="contactT">+91 7358091727</p>
+                    <p id="addressT">P-202, Bhaggyam Pragathi Apartments, Sapthagiri Nagar Main Road</p>
+                    <p><a id="emailT" href="#1">jpjosh2000@gmail.com</a></p>
+                    <p><a id="gitT" href="#1">https://www.geeksforgeeks.org/linked-list-set-1-introduction/</a></p>
+                    <p><a id="linkT" href="#1">https://www.geeksforgeeks.org/linked-list-set-1-introduction/</a></p>
+                    <hr>
+                </div>
+            </div>
+            <div class="col-md-8 py-5 backg">
+                <div class="card mt-0">
+                    <div class="card-header backgro">
+                        <h3>Education</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul id="edT">
+                            <li>
+                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis, possimus?</p>
+                            </li>
+                            <li>
+                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis, possimus?</p>
+                            </li>
+                            <li>
+                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis, possimus?</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card mt-4">
+                    <div class="card-header background">
+                        <h3>Work Experience</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul id="weT">
+                            <li>
+                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis, possimus?</p>
+                            </li>
+                            <li>
+                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis, possimus?</p>
+                            </li>
+                            <li>
+                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis, possimus?</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card mt-4">
+                    <div class="card-header background">
+                        <h3>Skills</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul id="skT">
+                            <li>
+                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis, possimus?</p>
+                            </li>
+                            <li>
+                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis, possimus?</p>
+                            </li>
+                            <li>
+                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis, possimus?</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card mt-4">
+                    <div class="card-header background">
+                        <h3>Achievements</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul id="acT">
+                            <li>
+                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis, possimus?</p>
+                            </li>
+                            <li>
+                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis, possimus?</p>
+                            </li>
+                            <li>
+                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis, possimus?</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card mt-4">
+                    <div class="card-header background">
+                        <h3>Certifications</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul id="ceT">
+                            <li>
+                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis, possimus?</p>
+                            </li>
+                            <li>
+                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis, possimus?</p>
+                            </li>
+                            <li>
+                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis, possimus?</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card mt-4">
+                    <div class="card-header background">
+                        <h3>Projects</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul id="prT">
+                            <li>
+                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis, possimus?</p>
+                            </li>
+                            <li>
+                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis, possimus?</p>
+                            </li>
+                            <li>
+                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis, possimus?</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card mt-4">
+                    <div class="card-header background">
+                        <h3>Languages</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul id="laT">
+                            <li>
+                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis, possimus?</p>
+                            </li>
+                            <li>
+                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis, possimus?</p>
+                            </li>
+                            <li>
+                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis, possimus?</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card mt-4">
+                    <div class="card-header background">
+                        <h3>Interests</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul id="intT">
+                            <li>
+                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis, possimus?</p>
+                            </li>
+                            <li>
+                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis, possimus?</p>
+                            </li>
+                            <li>
+                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis, possimus?</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-3 text-center" id="print">
+        <button onclick="printResume()" class="btn btn-primary btn-lg background" id="printRes">Print Resume</button>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js " integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM " crossorigin="anonymous "></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js "></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js "></script>-->
+    <script src="script.js "></script>
+    <script src="https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js "></script>
+    <script>
+        function printResume() {
+            /*var element = document.querySelector("#cv-template");
+            html2pdf().from(element).save("Resume.pdf");*/
+            window.print()
+        }
+    </script>
+</body>
+
+</html>
